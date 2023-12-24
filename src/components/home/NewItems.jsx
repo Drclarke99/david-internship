@@ -105,10 +105,10 @@ const NewItems = () => {
               <div className="nft__item" key={index}>
                 <div className="author_list_pp">
                   <Link
-                    to="/author"
+                    to={`/author/${newItems[index].authorId}`}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
-                    title="Creator: Monica Lucas"
+                    title={`Creator: ${newItems[index].authorName}`}
                   >
                     <img className="lazy" src={newItems[index].authorImage} alt="" />
                     <i className="fa fa-check"></i>
