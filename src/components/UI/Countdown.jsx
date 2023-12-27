@@ -5,36 +5,36 @@ const Countdown = ({expiryDate}) => {
     const [countdownMinutes, setCountdownMinutes] = useState(0);
     const [countdownSeconds, setCountdownSeconds] = useState(0);
     const [isExpired, setIsExpired] = useState(false);
-    let cancelId;
 
     useEffect(() => {
-        startTimer();
-      }, []);
-
-    function startTimer() {
-        cancelId = setInterval(updateCountdown, 1000/60);
-    }
+        const cancelId = setInterval(updateCountdown, 1000/60);
+        function updateCountdown() {
+            let countdown = expiryDate - Date.now();
+            if (countdown < 0) {
+                countdown = 0;
+                setIsExpired(true);
+            }
     
-    function updateCountdown() {
-        let countdown = expiryDate - Date.now();
-        if (countdown < 0) {
-            countdown = 0;
-            setIsExpired(true);
+            let secondsLeft = countdown / 1000;
+            let minutesLeft = secondsLeft / 60;
+            let hoursLeft = minutesLeft / 60;
+    
+            let secondsText = Math.floor(secondsLeft) % 60;
+            let minutesText = Math.floor(minutesLeft) % 60;
+            let hoursText = Math.floor(hoursLeft);
+            
+            setCountdownHours(hoursText);
+            setCountdownMinutes(minutesText);
+            setCountdownSeconds(secondsText);
+        }
+        return () => {
             clearInterval(cancelId);
         }
+    }, [expiryDate]);
 
-        let secondsLeft = countdown / 1000;
-        let minutesLeft = secondsLeft / 60;
-        let hoursLeft = minutesLeft / 60;
-
-        let secondsText = Math.floor(secondsLeft) % 60;
-        let minutesText = Math.floor(minutesLeft) % 60;
-        let hoursText = Math.floor(hoursLeft);
-        
-        setCountdownHours(hoursText);
-        setCountdownMinutes(minutesText);
-        setCountdownSeconds(secondsText);
-    }
+    // function startTimer() {
+    //     cancelId = setInterval(updateCountdown, 1000/60);
+    // }
 
     return (
         !isExpired ? (
