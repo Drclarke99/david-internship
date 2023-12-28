@@ -46,11 +46,11 @@ const NewItems = () => {
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
-              <h2>New Items</h2>
+              <h2 data-aos="fade">New Items</h2>
               <div className="small-border bg-color-2"></div>
             </div>
           </div>
-          <OwlCarousel className="owl-theme" {...owlOptions}>
+          <OwlCarousel className="owl-theme" {...owlOptions} data-aos="fade">
           {isLoading ? (
               new Array(7).fill(0).map((_, index) => (
                 <div className="nft__item" key={index}>
