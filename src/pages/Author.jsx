@@ -9,6 +9,7 @@ const Author = () => {
   const {id} = useParams();
   const [authorData, setAuthorData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isFollowed, setIsFollowed] = useState(false);
 
   async function fetchAuthorData() {
     const {data} = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`);
@@ -17,12 +18,17 @@ const Author = () => {
   }
 
   useEffect(() => {
-    fetchAuthorData();
-  }, [authorData]);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
+    fetchAuthorData();
   }, []);
+
+  const handleFollow = () => {
+    setIsFollowed(!isFollowed);
+    setAuthorData(prevData => ({
+      ...prevData,
+      followers: isFollowed ? prevData.followers - 1 : prevData.followers + 1,
+    }));
+  }
 
   return (
     <div id="wrapper">
@@ -110,8 +116,12 @@ const Author = () => {
                     <div className="profile_follow de-flex">
                       <div className="de-flex-col">
                         <div className="profile_follower">{authorData.followers} followers</div>
-                        <Link to="#" className="btn-main">
-                          Follow
+                        <Link to="#" className="btn-main" onClick={handleFollow}>
+                          {isFollowed ? (
+                            "Unfollow"
+                          ):(
+                            "Follow"
+                          )}
                         </Link>
                       </div>
                     </div>

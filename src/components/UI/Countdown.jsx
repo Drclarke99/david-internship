@@ -32,10 +32,6 @@ const Countdown = ({expiryDate}) => {
         }
     }, [expiryDate]);
 
-    // function startTimer() {
-    //     cancelId = setInterval(updateCountdown, 1000/60);
-    // }
-
     return (
         !isExpired ? (
             <div className="de_countdown">
